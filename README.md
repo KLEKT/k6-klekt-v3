@@ -4,6 +4,11 @@ This project contains templates for load test stuits and orchestration scripts f
 
 ## Running locally
 
+First, install packages & compile the js bundles with webpack.
+```
+npm install
+npm run bundle
+```
 Either configure the docker compose file with the parameters you need and run 
 ```
 docker-compose up
