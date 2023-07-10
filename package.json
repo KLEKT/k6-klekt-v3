@@ -1,0 +1,32 @@
+{
+  "name": "k6",
+  "version": "1.0.0",
+  "description": "This project contains templates for load test stuits and orchestration scripts for deploying to various cloud environments.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "bundle": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BuildCircle/k6.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BuildCircle/k6/issues"
+  },
+  "homepage": "https://github.com/BuildCircle/k6#readme",
+  "devDependencies": {
+    "@babel/core": "^7.22.8",
+    "@babel/preset-env": "^7.22.7",
+    "babel-loader": "^9.1.3",
+    "core-js": "^3.31.1",
+    "k6": "^0.0.0",
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4"
+  }
+}

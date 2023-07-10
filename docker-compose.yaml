@@ -2,6 +2,8 @@ version: '3.4'
 services:
   k6:
     image: grafana/k6:latest
-    command: run /tests/script.js --vus 10 --duration 30s
+    command: "run /dist/test.bundle.js --out cloud"
+    environment:
+      K6_CLOUD_TOKEN: "adbc4ec73745caa08482489ff549909da09591614339016ab05e0a40db16f502"
     volumes:
-      - ./tests:/tests
+      - ./dist:/dist
