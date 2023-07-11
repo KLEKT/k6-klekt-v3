@@ -15,7 +15,7 @@ docker-compose up
 ```
 Or straight up run this command with the script you want to run
 ```
-$ docker run --rm -i grafana/k6 run - <./tests/script.js
+$ docker run --rm -i grafana/k6 run - <./dist/test.js
 ```
 
 k6 offers some useful options for looping and concurrency of scripts which are documented here: [https://k6.io/docs/get-started/running-k6/#using-options](https://k6.io/docs/get-started/running-k6/#using-options)
