@@ -48,7 +48,13 @@ function getSizeCategories(access) {
     return res;
 }
 
+function getSizeItems(access,product_variant_id) {
+    const res = http.get(`${baseURL}/size_chart/size_items?product_variant_id=${product_variant_id}&with_price=true`, { headers: { Authorization: `Bearer ${access}` } });
+    return res;
+}
+
 function getSizeChart(access,product_variant_id) {
+    //api/v1/size_chart/size_items
     const res = http.get(`${baseURL}/size_chart?product_variant_id=${product_variant_id}&include=size_template%2Csize_items%2Csize_metrics`, { headers: { Authorization: `Bearer ${access}` } });
     return res;
 }
@@ -88,10 +94,49 @@ function getProductVariantReviews(access, id) {
     return res;
 }
 
+function createProductListing(access,body) {
+    const res = http.post(`${baseURL}/account/seller_profile/listing`,
+        JSON.stringify(body),
+        { headers: { Authorization: `Bearer ${access}`, "content-type": "application/json" } });
+    return res;
+}
+
+function searchProductrListing(access) {
+    const res = http.get(`${baseURL}/account/seller_profile/listings`,
+        { headers: { Authorization: `Bearer ${access}` } });
+    return res;
+}
+
+function endProductListing(access,body) {
+    const res = http.post(`${baseURL}/account/seller_profile/listing/end`,
+        body,
+        { headers: { Authorization: `Bearer ${access}` } });
+    return res;
+}
+
+function sellerOnboarding(access, body) {
+    const res = http.post(`${baseURL}/account/seller_profile`,
+        body,
+        { headers: { Authorization: `Bearer ${access}` } });
+    return res;
+
+}
+
+function sellerAgreement(access) {
+    const res = http.post(`${baseURL}/account/seller_profile/agreement`,null,
+        { headers: { Authorization: `Bearer ${access}` } });
+    return res;
+}
+
+function sellerPayment(access, body) {
+    const res = http.post(`${baseURL}/account/seller_profile/payout_methods`,body,
+        { headers: { Authorization: `Bearer ${access}` } });
+    return res
+}
 
 function removeAccount(access) {
     const res = http.del(`${baseURL}/account`,null, { headers: { Authorization: `Bearer ${access}` } });
     return res;
 }
 
-export default { sendOtp, validateOtpCode, completeOnboarding, completeUserProfile, removeAccount, getProductCategories, getProductSubCategories, getSizeCategories, getSizeChart, getStyles, getProductVariants, getUsedProductVariants, getBrands, getProductVariantDetails, getProductVariantListings, getProductVariantReviews };
+export default { sendOtp, validateOtpCode, completeOnboarding, completeUserProfile, removeAccount, getProductCategories, getProductSubCategories, getSizeCategories, getSizeChart, getStyles, getProductVariants, getUsedProductVariants, getBrands, getProductVariantDetails, getProductVariantListings, getProductVariantReviews, createProductListing, endProductListing, getSizeItems, sellerOnboarding, sellerAgreement, sellerPayment, searchProductrListing};

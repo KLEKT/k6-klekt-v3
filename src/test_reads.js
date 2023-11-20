@@ -7,8 +7,8 @@ export const options = {
     app_browsing_reads: {
       //Name of executor
       executor: 'constant-vus',
-      vus: 100,
-      duration: '300s',
+      vus: 1,
+      duration: '10s',
       // more configuration here
     },
   },
@@ -26,7 +26,7 @@ export function setup() {
     return { access: null };
   }
 
-  const access = auth_res.json().meta.access;
+  const access = auth_res.json().meta.tokens.access;
 
   const firstName = faker.name.firstName();
   const lastName = faker.name.lastName();
@@ -50,7 +50,7 @@ export function setup() {
 export default function (data) {
 
   if(data.access == null){
-    console.log("No Auth Token");
+    // console.log("No Auth Token");
     return;
   }
 
@@ -63,8 +63,8 @@ export default function (data) {
     const product_subcategories_res = api.getProductSubCategories(data.access,category_id);
     check(product_subcategories_res, { 'Get SubCategories 200': (r) => r.status == 200 });
   }else{
-    console.log(product_categories_res.body)
-    console.log("Could not get categories, skipping subcategories")
+    // console.log(product_categories_res.body)
+    // console.log("Could not get categories, skipping subcategories")
   }
 
   // Catalouge
@@ -89,7 +89,7 @@ export default function (data) {
     const size_chart_res = api.getSizeChart(data.access, product_variant_id);
     check(size_chart_res, { 'Get Size Chart 200': (r) => r.status == 200 });
   } else {
-    console.log("Could not get product variants, skipping variant details, listings, reviews and size chart")
+    // console.log("Could not get product variants, skipping variant details, listings, reviews and size chart")
   }
 
   const used_product_variants_res = api.getUsedProductVariants(data.access,"nike");

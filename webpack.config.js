@@ -3,7 +3,8 @@ const path = require('path');
 module.exports = {
   mode: 'production',
   entry: {
-    test: './src/test.js',
+    test_reads: './src/test_reads.js',
+    test_writes: './src/test_writes.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'), // eslint-disable-line
