@@ -107,7 +107,7 @@ export default function (data) {
   });
   check(listing_res, { 'POST New Listing': (r) => r.status == 201 });
   const listing_search_res = api.searchProductrListing(data.access)
-  sleep(5);
+  // sleep(30); # Maybe need to set some small value like 1 or 2 seconds
   check(listing_search_res, { 'GET listings': (r) => r.status == 200 });
   console.log(listing_search_res.status)
   console.log(listing_search_res.body)

@@ -13,7 +13,7 @@ function validateOtpCode(phoneNumber, otpCode) {
 }
 
 function completeOnboarding(access,first_name,last_name,email,date_of_birth) {
-    const res = http.post(`${baseURL}/account/onboarding`, { 
+    const res = http.post(`${baseURL}/account/onboarding`, {
         first_name: first_name,
         last_name: last_name,
         email: email,
@@ -23,7 +23,7 @@ function completeOnboarding(access,first_name,last_name,email,date_of_birth) {
 }
 
 function completeUserProfile(access,description,username,school,location,gender) {
-    const res = http.put(`${baseURL}/account/user_profile`, { 
+    const res = http.put(`${baseURL}/account/user_profile`, {
         description: description,
         username: username,
         school: school,
@@ -101,8 +101,16 @@ function createProductListing(access,body) {
     return res;
 }
 
+// You can add additional parameter to this function for needed status and set it by rule:
+// If you create consignment listing -> need_to_ship, else -> listed
+// function searchProductrListing(access, status) {
+//     const res = http.get(`${baseURL}/account/seller_profile/listings?filter[status]=${status}`,
+//         { headers: { Authorization: `Bearer ${access}` } });
+//     return res;
+// }
+
 function searchProductrListing(access) {
-    const res = http.get(`${baseURL}/account/seller_profile/listings`,
+    const res = http.get(`${baseURL}/account/seller_profile/listings?filter[status]=need_to_ship`,
         { headers: { Authorization: `Bearer ${access}` } });
     return res;
 }
