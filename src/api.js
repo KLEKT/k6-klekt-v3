@@ -110,15 +110,15 @@ function createProductListing(access,body) {
 // }
 
 function searchProductrListing(access) {
-    const res = http.get(`${baseURL}/account/seller_profile/listings?filter[status]=need_to_ship`,
+    const res = http.get(`${baseURL}/account/seller_profile/listings?filter[status]=listed`,
         { headers: { Authorization: `Bearer ${access}` } });
     return res;
 }
 
-function endProductListing(access,body) {
+function endProductListing(access, body) {
     const res = http.post(`${baseURL}/account/seller_profile/listing/end`,
-        body,
-        { headers: { Authorization: `Bearer ${access}` } });
+        JSON.stringify(body),
+        { headers: { Authorization: `Bearer ${access}`, "content-type": "application/json" } });
     return res;
 }
 

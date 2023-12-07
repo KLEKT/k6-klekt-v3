@@ -8,7 +8,7 @@ export const options = {
       //Name of executor
       executor: 'constant-vus',
       vus: 1,
-      duration: '60s',
+      duration: '10s',
       // more configuration here
     },
   },
@@ -85,7 +85,7 @@ export default function (data) {
   check(size_chart_items_res, { 'GET Size chart items': (r) => r.status == 200 });
   const size_item_id = size_chart_items_res.json().data[0].id
   const listing_res = api.createProductListing(data.access, {
-    consignment: true,
+    consignment: false,
     accept_bids: true,
     bid_range: 0,
     condition_description:  "This is a test listing",
@@ -106,20 +106,26 @@ export default function (data) {
     ]
   });
   check(listing_res, { 'POST New Listing': (r) => r.status == 201 });
+
+  sleep(1);
   const listing_search_res = api.searchProductrListing(data.access)
-  // sleep(30); # Maybe need to set some small value like 1 or 2 seconds
+  const listing_id = listing_search_res.json().data[0].id
+
+  if(!listing_id)
+  {
+    sleep(1);
+    listing_search_res = api.searchProductrListing(data.access)
+    listing_id = listing_search_res.json().data[0].id
+  }
+  
   check(listing_search_res, { 'GET listings': (r) => r.status == 200 });
-  console.log(listing_search_res.status)
-  console.log(listing_search_res.body)
-  // const listing_id = listing_res.json().data.id
-  // const end_listing_res =  api.endProductListing(data.access, {
-  //   listing_id: listing_id
-  // });
-  // check(end_listing_res, { 'POST End Listing': (r) => r.status == 200 });
+  const end_listing_res =  api.endProductListing(data.access, {
+    listing_id: listing_id
+  });
+  check(end_listing_res, { 'POST End Listing': (r) => r.status == 201 });
 }
 
 export function teardown(data) {
   const remove_account_res = api.removeAccount(data.access);
   check(remove_account_res, { 'Account Removal was 204': (r) => r.status == 204 });
-  console.log(remove_account_res.status)
 }
