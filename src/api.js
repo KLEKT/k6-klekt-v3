@@ -147,4 +147,10 @@ function removeAccount(access) {
     return res;
 }
 
-export default { sendOtp, validateOtpCode, completeOnboarding, completeUserProfile, removeAccount, getProductCategories, getProductSubCategories, getSizeCategories, getSizeChart, getStyles, getProductVariants, getUsedProductVariants, getBrands, getProductVariantDetails, getProductVariantListings, getProductVariantReviews, createProductListing, endProductListing, getSizeItems, sellerOnboarding, sellerAgreement, sellerPayment, searchProductrListing};
+function createOffer(access, body) {
+    const res = http.post(`${baseURL}/offers`, JSON.stringify(body),
+        { headers: { Authorization: `Bearer ${access}`, "content-type": "application/json" } });
+    return res
+}
+
+export default { sendOtp, validateOtpCode, completeOnboarding, completeUserProfile, removeAccount, getProductCategories, getProductSubCategories, getSizeCategories, getSizeChart, getStyles, getProductVariants, getUsedProductVariants, getBrands, getProductVariantDetails, getProductVariantListings, getProductVariantReviews, createProductListing, endProductListing, getSizeItems, sellerOnboarding, sellerAgreement, sellerPayment, searchProductrListing, createOffer};

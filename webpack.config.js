@@ -5,6 +5,7 @@ module.exports = {
   entry: {
     test_reads: './src/test_reads.js',
     test_writes: './src/test_writes.js',
+    test_bids: './src/test_bids.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'), // eslint-disable-line
