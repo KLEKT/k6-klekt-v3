@@ -66,8 +66,6 @@ export function setup() {
   const seller_agreement_res = api.sellerAgreement(access);
   check(seller_agreement_res, { 'Seller agreement was 200': (r) => r.status == 200 });
 
-  const listing = setup_listing({access: access});
-
   const buyer_delivery_address = {
     first_name: firstName,
     last_name: lastName,
@@ -79,8 +77,8 @@ export function setup() {
     street_address_1: address,
     street_address_2: address2
   }
-
-  return { access: access, listing: listing, buyer_delivery_address: buyer_delivery_address };
+ 
+  return { access: access, buyer_delivery_address: buyer_delivery_address };
 }
 
 export default function (data) {
@@ -88,13 +86,16 @@ export default function (data) {
     console.log("No Auth Token");
     return;
   }
-  const payload = {
-    offer_type: data.listing.listing_type,
-    product_variant_id: data.listing.product_variant_id,
-    size_item_id: data.listing.size_item_id,
-    listing_id: data.listing.listing_id,
+
+  const listing = setup_listing({access: data.access});
+
+  const bid_payload = {
+    offer_type: listing.listing_type,
+    product_variant_id: listing.product_variant_id,
+    size_item_id: listing.size_item_id,
+    listing_id: listing.listing_id,
     expiration: 7,
-    asking_price_cents: 1000,
+    asking_price_cents: 5,
     delivery_address: {
       first_name: data.buyer_delivery_address.first_name,
       last_name: data.buyer_delivery_address.last_name,
@@ -107,18 +108,36 @@ export default function (data) {
       street_address_2: data.buyer_delivery_address.street_address_2
     }
   }
-  const offer_result = api.createOffer(data.access, payload)
-  check(offer_result, { 'POST Offer': (r) => r.status == 201 });
+
+  const offer_res = api.createOffer(data.access, bid_payload)
+  console.log(offer_res.json())
+  check(offer_res, { 'POST Offer': (r) => r.status == 201 });
+
+  let offer_id = null;
+  let offer_search_res = null;
+  while(!offer_id)
+  {
+    sleep(1);
+    offer_search_res = api.searchAccountOffers(data.access, listing.listing_type)
+    console.log(offer_search_res.json())
+    offer_id = offer_search_res.json().data.filter(function(offer) {
+      return offer.attributes.fitting_listing_id == listing.listing_id;
+    })
+  }
+
+  check(offer_search_res, { 'GET Offers': (r) => r.status == 200 });
+  const offer_accepted_res = api.acceptOffer(data.access, offer_id);
+  check(offer_accepted_res, { 'POST Accept Offer': (r) => r.status == 201 });
+
+  // const end_listing_res =  api.endProductListing(data.access, {
+  //   listing_id: listing.listing_id
+  // });
+  // check(end_listing_res, { 'POST End Listing': (r) => r.status == 201 });   
+  
 }
 
 
 export function teardown(data) {
-
-  const end_listing_res =  api.endProductListing(data.access, {
-    listing_id: data.listing.listing_id
-  });
-  check(end_listing_res, { 'POST End Listing': (r) => r.status == 201 });   
-  
-  const remove_account_res = api.removeAccount(data.access);
-  check(remove_account_res, { 'Account Removal was 204': (r) => r.status == 204 });
+  // const remove_account_res = api.removeAccount(data.access);
+  // check(remove_account_res, { 'Account Removal was 204': (r) => r.status == 204 });
 }

@@ -101,14 +101,6 @@ function createProductListing(access,body) {
     return res;
 }
 
-// You can add additional parameter to this function for needed status and set it by rule:
-// If you create consignment listing -> need_to_ship, else -> listed
-// function searchProductrListing(access, status) {
-//     const res = http.get(`${baseURL}/account/seller_profile/listings?filter[status]=${status}`,
-//         { headers: { Authorization: `Bearer ${access}` } });
-//     return res;
-// }
-
 function searchProductrListing(access) {
     const res = http.get(`${baseURL}/account/seller_profile/listings?filter[status]=listed`,
         { headers: { Authorization: `Bearer ${access}` } });
@@ -153,4 +145,16 @@ function createOffer(access, body) {
     return res
 }
 
-export default { sendOtp, validateOtpCode, completeOnboarding, completeUserProfile, removeAccount, getProductCategories, getProductSubCategories, getSizeCategories, getSizeChart, getStyles, getProductVariants, getUsedProductVariants, getBrands, getProductVariantDetails, getProductVariantListings, getProductVariantReviews, createProductListing, endProductListing, getSizeItems, sellerOnboarding, sellerAgreement, sellerPayment, searchProductrListing, createOffer};
+function searchAccountOffers(access, listing_type) {
+    const res = http.get(`${baseURL}/account/offers?filter[status]=pending`,
+        { headers: { Authorization: `Bearer ${access}` } });
+    return res
+}
+
+function acceptOffer(access, offer_id) {
+    const res = http.post(`${baseURL}/account/seller_profile/offers/${encodeURIComponent(offer_id)}/accept`, null,
+        { headers: { Authorization: `Bearer ${access}` } });
+    return res
+}
+
+export default { sendOtp, validateOtpCode, completeOnboarding, completeUserProfile, removeAccount, getProductCategories, getProductSubCategories, getSizeCategories, getSizeChart, getStyles, getProductVariants, getUsedProductVariants, getBrands, getProductVariantDetails, getProductVariantListings, getProductVariantReviews, createProductListing, endProductListing, getSizeItems, sellerOnboarding, sellerAgreement, sellerPayment, searchProductrListing, createOffer, acceptOffer, searchAccountOffers};

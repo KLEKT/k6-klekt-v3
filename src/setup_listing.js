@@ -24,7 +24,7 @@ export default function(data) {
         ],
         listings: [
           {
-            preferred_income_cents: 10,
+            sale_price_cents: 10,
             quantity: 1,
             product_variant_id: product_variant_id,
             size_item_id: size_item_id
@@ -36,8 +36,8 @@ export default function(data) {
       sleep(1);
       const listing_search_res = api.searchProductrListing(data.access)
       const listing_id = listing_search_res.json().data[0].id
-    
-      if(!listing_id)
+      
+      while(!listing_id)
       {
         sleep(1);
         listing_search_res = api.searchProductrListing(data.access)
