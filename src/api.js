@@ -146,7 +146,7 @@ function createOffer(access, body) {
 }
 
 function searchAccountOffers(access, listing_type) {
-    const res = http.get(`${baseURL}/account/offers?filter[status]=pending&filter[offer_type]=${listing_type}`,
+    const res = http.get(`${baseURL}/account/seller_profile/offers?filter[status]=pending&filter[offer_type]=${listing_type}`,
         { headers: { Authorization: `Bearer ${access}` } });
     return res
 }

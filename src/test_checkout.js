@@ -119,18 +119,19 @@ export default function (data) {
     sleep(1);
     offer_search_res = api.searchAccountOffers(data.access, listing.listing_type)
     const offer = offer_search_res.json().data.filter(function(offer) {
-      return offer.attributes.fitting_listing_id == listing.listing_id;
+      return offer.attributes.listing_id == listing.listing_id
     })
-    if(offer)
+
+    if(offer || offer.length > 0)
     {
       offer_id = offer[0].id
     }
-    console.log(offer_id)
   }
 
   check(offer_search_res, { 'GET Offers': (r) => r.status == 200 });
   const offer_accepted_res = api.acceptOffer(data.access, offer_id);
-  check(offer_accepted_res, { 'POST Accept Offer': (r) => r.status == 201 });
+  check(offer_accepted_res, { 'POST Accept Offer': (r) => r.status == 204 });
+  console.log(offer_accepted_res.status)
 
   // Add listing to cart
 

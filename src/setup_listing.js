@@ -42,7 +42,7 @@ export default function(data) {
         const listing = listing_search_res.json().data.filter(function(listing) {
           return listing.attributes.listing_type == listing_type;
         });
-        if(listing)
+        if(listing || listing.length > 0)
         {
           listing_id = listing[0].id
         }
