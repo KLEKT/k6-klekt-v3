@@ -131,8 +131,12 @@ export default function (data) {
   check(offer_search_res, { 'GET Offers': (r) => r.status == 200 });
   const offer_accepted_res = api.acceptOffer(data.access, offer_id);
   check(offer_accepted_res, { 'POST Accept Offer': (r) => r.status == 201 });
-  console.log(offer_accepted_res.status)
-  console.log(offer_accepted_res.body)
+
+  // Add listing to cart
+
+  // Checkout and pay
+
+  // End listing
   // const end_listing_res =  api.endProductListing(data.access, {
   //   listing_id: listing.listing_id
   // });
@@ -142,6 +146,6 @@ export default function (data) {
 
 
 export function teardown(data) {
-  // const remove_account_res = api.removeAccount(data.access);
-  // check(remove_account_res, { 'Account Removal was 204': (r) => r.status == 204 });
+  const remove_account_res = api.removeAccount(data.access);
+  check(remove_account_res, { 'Account Removal was 204': (r) => r.status == 204 });
 }
