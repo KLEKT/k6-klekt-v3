@@ -50,7 +50,7 @@ export function setup() {
 export default function (data) {
 
   if(data.access == null){
-    // console.log("No Auth Token");
+    console.log("No Auth Token");
     return;
   }
 
@@ -63,8 +63,7 @@ export default function (data) {
     const product_subcategories_res = api.getProductSubCategories(data.access,category_id);
     check(product_subcategories_res, { 'Get SubCategories 200': (r) => r.status == 200 });
   }else{
-    // console.log(product_categories_res.body)
-    // console.log("Could not get categories, skipping subcategories")
+    console.log("Could not get categories, skipping subcategories")
   }
 
   // Catalouge
@@ -89,7 +88,7 @@ export default function (data) {
     const size_chart_res = api.getSizeChart(data.access, product_variant_id);
     check(size_chart_res, { 'Get Size Chart 200': (r) => r.status == 200 });
   } else {
-    // console.log("Could not get product variants, skipping variant details, listings, reviews and size chart")
+    console.log("Could not get product variants, skipping variant details, listings, reviews and size chart")
   }
 
   const used_product_variants_res = api.getUsedProductVariants(data.access,"nike");

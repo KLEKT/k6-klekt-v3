@@ -94,7 +94,7 @@ export default function (data) {
     size_item_id: data.listing.size_item_id,
     listing_id: data.listing.listing_id,
     expiration: 7,
-    asking_price_cents: 1000,
+    asking_price_cents: 10,
     delivery_address: {
       first_name: data.buyer_delivery_address.first_name,
       last_name: data.buyer_delivery_address.last_name,

@@ -33,15 +33,19 @@ export default function(data) {
       });
       check(listing_res, { 'POST New Listing': (r) => r.status == 201 });
     
-      sleep(1);
-      const listing_search_res = api.searchProductrListing(data.access)
-      const listing_id = listing_search_res.json().data[0].id
-      
+      let listing_search_res = null;
+      let listing_id = null;
       while(!listing_id)
       {
         sleep(1);
         listing_search_res = api.searchProductrListing(data.access)
-        listing_id = listing_search_res.json().data[0].id
+        const listing = listing_search_res.json().data.filter(function(listing) {
+          return listing.attributes.listing_type == listing_type;
+        });
+        if(listing)
+        {
+          listing_id = listing[0].id
+        }
       }
       
       check(listing_search_res, { 'GET listings': (r) => r.status == 200 });

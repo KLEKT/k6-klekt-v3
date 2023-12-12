@@ -146,13 +146,13 @@ function createOffer(access, body) {
 }
 
 function searchAccountOffers(access, listing_type) {
-    const res = http.get(`${baseURL}/account/offers?filter[status]=pending`,
+    const res = http.get(`${baseURL}/account/offers?filter[status]=pending&filter[offer_type]=${listing_type}`,
         { headers: { Authorization: `Bearer ${access}` } });
     return res
 }
 
 function acceptOffer(access, offer_id) {
-    const res = http.post(`${baseURL}/account/seller_profile/offers/${encodeURIComponent(offer_id)}/accept`, null,
+    const res = http.post(`${baseURL}/account/seller_profile/offers/${offer_id}/accept`, null,
         { headers: { Authorization: `Bearer ${access}` } });
     return res
 }

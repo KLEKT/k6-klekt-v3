@@ -95,7 +95,7 @@ export default function (data) {
     size_item_id: listing.size_item_id,
     listing_id: listing.listing_id,
     expiration: 7,
-    asking_price_cents: 5,
+    asking_price_cents: 10,
     delivery_address: {
       first_name: data.buyer_delivery_address.first_name,
       last_name: data.buyer_delivery_address.last_name,
@@ -110,7 +110,6 @@ export default function (data) {
   }
 
   const offer_res = api.createOffer(data.access, bid_payload)
-  console.log(offer_res.json())
   check(offer_res, { 'POST Offer': (r) => r.status == 201 });
 
   let offer_id = null;
@@ -119,16 +118,21 @@ export default function (data) {
   {
     sleep(1);
     offer_search_res = api.searchAccountOffers(data.access, listing.listing_type)
-    console.log(offer_search_res.json())
-    offer_id = offer_search_res.json().data.filter(function(offer) {
+    const offer = offer_search_res.json().data.filter(function(offer) {
       return offer.attributes.fitting_listing_id == listing.listing_id;
     })
+    if(offer)
+    {
+      offer_id = offer[0].id
+    }
+    console.log(offer_id)
   }
 
   check(offer_search_res, { 'GET Offers': (r) => r.status == 200 });
   const offer_accepted_res = api.acceptOffer(data.access, offer_id);
   check(offer_accepted_res, { 'POST Accept Offer': (r) => r.status == 201 });
-
+  console.log(offer_accepted_res.status)
+  console.log(offer_accepted_res.body)
   // const end_listing_res =  api.endProductListing(data.access, {
   //   listing_id: listing.listing_id
   // });
