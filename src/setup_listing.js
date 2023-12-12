@@ -4,11 +4,24 @@ import api from '/src/api.js';
 export default function(data) {
       const product_variants_res = api.getProductVariants(data.access,"nike");
       check(product_variants_res, { 'GET Product variant': (r) => r.status == 200 });
-      const product_variant_id = product_variants_res.json().data[0].id
+      
+      const product_ariant_data = product_variants_res.json().data
+      let product_variant_id = null;
+      if(product_ariant_data || product_ariant_data.length > 0)
+      {
+         product_variant_id = product_ariant_data[0].id
+      }
     
       const size_chart_items_res = api.getSizeItems(data.access, product_variant_id);
       check(size_chart_items_res, { 'GET Size chart items': (r) => r.status == 200 });
-      const size_item_id = size_chart_items_res.json().data[0].id
+
+      const size_chart_items_data = size_chart_items_res.json().data
+      let size_item_id = null;
+      if(size_chart_items_data || size_chart_items_data.length > 0)
+      {
+         size_item_id = size_chart_items_data[0].id
+      }
+      
       const listing_type = "new_with_defect";
       const listing_res = api.createProductListing(data.access, {
         consignment: false,

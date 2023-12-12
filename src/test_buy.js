@@ -38,13 +38,13 @@ export function setup() {
   check(onboarding_res, { 'Account Onboarding was 200': (r) => r.status == 200 });
 
   const gender = faker.random.number({ min: 0, max: 1 }) == 0 ? 'male' : 'female'
-  const bio = faker.lorem.sentences()
+  const bio = "This is my bio"
   const address = faker.address.streetAddress()
   const city = faker.address.city()
   const usernamePostfix = faker.random.number({ min: 10000, max: 99999 })
   const user_profile_res = api.completeUserProfile(access,bio, `loadtestuser${usernamePostfix}`,`${city} High School`,`${address}, ${city}`,gender)
   check(user_profile_res, { 'Profile Setup was 200': (r) => r.status == 200 });
-  
+
   const address2 = faker.address.streetAddress()
 
   const seller_profile_res = api.sellerOnboarding(access, {
@@ -88,7 +88,6 @@ export default function (data) {
   }
 
   const listing = setup_listing({access: data.access});
-
   const bid_payload = {
     offer_type: listing.listing_type,
     product_variant_id: listing.product_variant_id,
@@ -131,18 +130,21 @@ export default function (data) {
   check(offer_search_res, { 'GET Offers': (r) => r.status == 200 });
   const offer_accepted_res = api.acceptOffer(data.access, offer_id);
   check(offer_accepted_res, { 'POST Accept Offer': (r) => r.status == 204 });
-  console.log(offer_accepted_res.status)
 
-  // Add listing to cart
+  const orders = api.getOrders(data.access)
+  check(orders, { 'GET Orders': (r) => r.status == 200 });
+  console.log(orders.status)
 
-  // Checkout and pay
+  // Pay for order
 
-  // End listing
-  // const end_listing_res =  api.endProductListing(data.access, {
-  //   listing_id: listing.listing_id
-  // });
-  // check(end_listing_res, { 'POST End Listing': (r) => r.status == 201 });   
-  
+  const end_listing_res =  api.endProductListing(data.access, {
+    listing_id: listing.listing_id
+  });
+  check(end_listing_res, { 'POST End Listing': (r) => r.status == 201 });   
+  if(end_listing_res.status != 201)
+  {
+    console.log(end_listing_res.body)
+  }
 }
 
 

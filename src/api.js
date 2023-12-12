@@ -157,4 +157,10 @@ function acceptOffer(access, offer_id) {
     return res
 }
 
-export default { sendOtp, validateOtpCode, completeOnboarding, completeUserProfile, removeAccount, getProductCategories, getProductSubCategories, getSizeCategories, getSizeChart, getStyles, getProductVariants, getUsedProductVariants, getBrands, getProductVariantDetails, getProductVariantListings, getProductVariantReviews, createProductListing, endProductListing, getSizeItems, sellerOnboarding, sellerAgreement, sellerPayment, searchProductrListing, createOffer, acceptOffer, searchAccountOffers};
+function getOrders(access){
+    const res = http.get(`${baseURL}/account/orders?filter[status]=unpaid`, 
+    { headers: { Authorization: `Bearer ${access}` } });
+    return res;
+}
+
+export default { sendOtp, validateOtpCode, completeOnboarding, completeUserProfile, removeAccount, getProductCategories, getProductSubCategories, getSizeCategories, getSizeChart, getStyles, getProductVariants, getUsedProductVariants, getBrands, getProductVariantDetails, getProductVariantListings, getProductVariantReviews, createProductListing, endProductListing, getSizeItems, sellerOnboarding, sellerAgreement, sellerPayment, searchProductrListing, createOffer, acceptOffer, searchAccountOffers, getOrders};
