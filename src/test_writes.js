@@ -8,8 +8,8 @@ export const options = {
     app_browsing_reads: {
       //Name of executor
       executor: 'constant-vus',
-      vus: 1,
-      duration: '10s',
+      vus: 100,
+      duration: '5m',
       // more configuration here
     },
   },
@@ -64,8 +64,9 @@ export function setup() {
   });
   check(seller_profile_res, { 'Seller profile setup was 200': (r) => r.status == 200 });
   const seller_agreement_res = api.sellerAgreement(access);
+
   check(seller_agreement_res, { 'Seller agreement was 200': (r) => r.status == 200 });
-  
+
   return { access: access };
 }
 
@@ -77,15 +78,16 @@ export default function (data) {
   }
 
   const listing = setup_listing({access: data.access});
-  
+
   const end_listing_res =  api.endProductListing(data.access, {
     listing_id: listing.listing_id
   });
-
+  console.log(end_listing_res.status)
   check(end_listing_res, { 'POST End Listing': (r) => r.status == 201 });
 }
 
 export function teardown(data) {
   const remove_account_res = api.removeAccount(data.access);
+  console.log(remove_account_res.body)
   check(remove_account_res, { 'Account Removal was 204': (r) => r.status == 204 });
 }

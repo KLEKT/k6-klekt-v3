@@ -1,6 +1,6 @@
 import http from 'k6/http';
 
-const baseURL = 'https://staging-api.k-v3.com/api/v1';
+const baseURL = 'https://api.k-v3.com/api/v1';
 
 function sendOtp(phoneNumber) {
     const res = http.post(`${baseURL}/account/authentication/send_code`,{ phone_number: phoneNumber });
@@ -158,7 +158,7 @@ function acceptOffer(access, offer_id) {
 }
 
 function getOrders(access){
-    const res = http.get(`${baseURL}/account/orders?filter[status]=unpaid`, 
+    const res = http.get(`${baseURL}/account/orders?filter[status]=unpaid`,
     { headers: { Authorization: `Bearer ${access}` } });
     return res;
 }
