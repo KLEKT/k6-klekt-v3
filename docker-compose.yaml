@@ -2,6 +2,6 @@ version: '3.4'
 services:
   k6:
     image: grafana/k6:latest
-    command: "run /dist/test_checkout.bundle.js"
+    command: "run /dist/test_reads.bundle.js"
     volumes:
       - ./dist:/dist

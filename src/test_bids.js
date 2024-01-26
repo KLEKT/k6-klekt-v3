@@ -2,15 +2,19 @@ import { check, sleep } from 'k6';
 import api from '/src/api.js';
 import * as faker from 'faker/locale/en_US';
 import setup_listing from '/src/setup_listing.js';
+import remove_listings from '/src/remove_listings.js';
 
 export const options = {
+  teardownTimeout: '300s',
   scenarios: {
-    app_browsing_reads: {
-      //Name of executor
-      executor: 'constant-vus',
-      vus: 2,
-      duration: '10s',
-      // more configuration here
+    app_browsing_bids: {
+      executor: 'ramping-vus',
+      startVUs: 1,
+      stages: [
+        { duration: '50s', target: 33 },
+        { duration: '100s', target: 66 },
+        { duration: '150s', target: 100 },
+      ],
     },
   },
 };
@@ -113,12 +117,8 @@ export default function (data) {
 
 
 export function teardown(data) {
+  remove_listings(data);
 
-  const end_listing_res =  api.endProductListing(data.access, {
-    listing_id: data.listing.listing_id
-  });
-  check(end_listing_res, { 'POST End Listing': (r) => r.status == 201 });   
-  
   const remove_account_res = api.removeAccount(data.access);
   check(remove_account_res, { 'Account Removal was 204': (r) => r.status == 204 });
 }

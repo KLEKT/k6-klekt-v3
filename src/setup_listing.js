@@ -27,7 +27,7 @@ export default function(data) {
         consignment: false,
         accept_bids: true,
         bid_range: 0,
-        condition_description:  "This is a test listing",
+        condition_description:  "This is a load test listing",
         listing_type: listing_type,
         box_condition: "good",
         expiration: 7,

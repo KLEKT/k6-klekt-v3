@@ -102,7 +102,13 @@ function createProductListing(access,body) {
 }
 
 function searchProductrListing(access) {
-    const res = http.get(`${baseURL}/account/seller_profile/listings?filter[status]=listed`,
+    const res = http.get(`${baseURL}/account/seller_profile/listings`,
+        { headers: { Authorization: `Bearer ${access}` } });
+    return res;
+}
+
+function searchProductrListingPage(access, page) {
+    const res = http.get(`${baseURL}/account/seller_profile/listings?page=${page}`,
         { headers: { Authorization: `Bearer ${access}` } });
     return res;
 }
@@ -163,4 +169,4 @@ function getOrders(access){
     return res;
 }
 
-export default { sendOtp, validateOtpCode, completeOnboarding, completeUserProfile, removeAccount, getProductCategories, getProductSubCategories, getSizeCategories, getSizeChart, getStyles, getProductVariants, getUsedProductVariants, getBrands, getProductVariantDetails, getProductVariantListings, getProductVariantReviews, createProductListing, endProductListing, getSizeItems, sellerOnboarding, sellerAgreement, sellerPayment, searchProductrListing, createOffer, acceptOffer, searchAccountOffers, getOrders};
+export default { sendOtp, validateOtpCode, completeOnboarding, completeUserProfile, removeAccount, getProductCategories, getProductSubCategories, getSizeCategories, getSizeChart, getStyles, getProductVariants, getUsedProductVariants, getBrands, getProductVariantDetails, getProductVariantListings, getProductVariantReviews, createProductListing, endProductListing, getSizeItems, sellerOnboarding, sellerAgreement, sellerPayment, searchProductrListing, createOffer, acceptOffer, searchAccountOffers, getOrders, searchProductrListingPage};

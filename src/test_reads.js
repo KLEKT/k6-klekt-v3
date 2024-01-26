@@ -5,11 +5,15 @@ import * as faker from 'faker/locale/en_US';
 export const options = {
   scenarios: {
     app_browsing_reads: {
-      //Name of executor
-      executor: 'constant-vus',
-      vus: 1,
-      duration: '10s',
-      // more configuration here
+      executor: 'ramping-vus',
+      startVUs: 1,
+      stages: [
+        { duration: '50s', target: 33 },
+        { duration: '100s', target: 66 },
+        { duration: '150s', target: 100 },
+        { duration: '200s', target: 300 },
+        { duration: '300s', target: 500 },
+      ],
     },
   },
 };

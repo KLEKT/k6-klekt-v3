@@ -1,0 +1,15 @@
+k6-klekt-v3-k6-1  |      http_req_blocked...............: avg=492.04µs min=125ns   med=1.08µs   max=63.51ms  p(90)=2.29µs   p(95)=2.75µs  
+k6-klekt-v3-k6-1  |      http_req_connecting............: avg=155.58µs min=0s      med=0s       max=19.76ms  p(90)=0s       p(95)=0s      
+k6-klekt-v3-k6-1  |      http_req_duration..............: avg=2.46s    min=11.55ms med=1s       max=26.32s   p(90)=5.66s    p(95)=8.89s   
+k6-klekt-v3-k6-1  |        { expected_response:true }...: avg=2.46s    min=63.97ms med=999.09ms max=26.32s   p(90)=5.64s    p(95)=8.84s   
+k6-klekt-v3-k6-1  |      http_req_failed................: 2.56%  ✓ 175       ✗ 6635 
+k6-klekt-v3-k6-1  |      http_req_receiving.............: avg=515.86µs min=20.33µs med=289µs    max=117.93ms p(90)=902.82µs p(95)=1.51ms  
+k6-klekt-v3-k6-1  |      http_req_sending...............: avg=349.62µs min=25.79µs med=297.35µs max=7.66ms   p(90)=585.71µs p(95)=743.12µs
+k6-klekt-v3-k6-1  |      http_req_tls_handshaking.......: avg=319.26µs min=0s      med=0s       max=48.65ms  p(90)=0s       p(95)=0s      
+k6-klekt-v3-k6-1  |      http_req_waiting...............: avg=2.45s    min=11.21ms med=1s       max=26.32s   p(90)=5.66s    p(95)=8.89s   
+k6-klekt-v3-k6-1  |      http_reqs......................: 6810   20.495175/s
+k6-klekt-v3-k6-1  |      iteration_duration.............: avg=34.71s   min=13.21ms med=24.22s   max=1m42s    p(90)=1m12s    p(95)=1m23s   
+k6-klekt-v3-k6-1  |      iterations.....................: 515    1.549929/s
+k6-klekt-v3-k6-1  |      vus............................: 57     min=0       max=99 
+k6-klekt-v3-k6-1  |      vus_max........................: 100    min=100     max=100
+k6-
